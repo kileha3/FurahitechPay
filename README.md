@@ -8,6 +8,8 @@ This is a collection of different payment API's, this API supports Stripe, Tigo 
 
 
 
+
+
 ## Features <a name="features"></a>
 * Small library
 * Supports Stripe,M-Pesa and Tigo Pesa payments
@@ -36,7 +38,7 @@ This API work with FurahitechPayments-Server repo, what you have to do is:-<br/>
 Add this to your dependencies (Check for the latest release):
 ```groovy
 
-implementation 'com.github.kileha3:FurahitechPay:$versionNumber'
+implementation 'com.github.kileha3:FurahitechPay:1.0'
 
 ```
 
