@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:id="@+id/coordinationLayout">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/AppBarLayout"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:elevation="@dimen/dimen_4dp"
+        android:layout_height="wrap_content"
+        tools:targetApi="lollipop">
+        <include
+            layout="@layout/layout_default_toolbar"/>
+        <ProgressBar
+            android:progressDrawable="@drawable/progress_bar_drawable"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+    </android.support.design.widget.AppBarLayout>
+    <FrameLayout
+        android:layout_below="@+id/AppBarLayout"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <WebView
+        android:layout_below="@+id/AppBarLayout"
+        android:id="@+id/secure_web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/emptyLoading"
+        android:src="@drawable/tigo_pesa_logo"
+        android:layout_centerInParent="true"
+        android:layout_width="@dimen/dimen_150dp"
+        android:layout_height="@dimen/dimen_150dp" />
+
+</RelativeLayout>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    android:background="@color/colorBackground"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/coordination_layout"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:mask="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:elevation="@dimen/dimen_4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:targetApi="lollipop">
+
+            <include
+                android:id="@+id/tool_bar"
+                layout="@layout/layout_default_toolbar"/>
+            <include
+                android:id="@+id/tool_bar_extended"
+                layout="@layout/layout_extended_toolbar"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.v7.widget.CardView
+                    android:id="@+id/content_holder"
+                    android:layout_margin="@dimen/dimen_8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardBackgroundColor="@android:color/white"
+                    card_view:cardCornerRadius="@dimen/dimen_2dp"
+                    card_view:cardElevation="@dimen/dimen_2dp"
+                    tools:targetApi="lollipop">
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/dimen_16dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:padding="@dimen/dimen_16dp"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="@string/supported_payments"
+                                android:textColor="@color/colorTextSecondary"
+                                android:textSize="@dimen/dimen_text_16sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <LinearLayout
+                                android:layout_marginTop="@dimen/dimen_16dp"
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dimen_40dp">
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:id="@+id/tigoPesa"
+                                    android:layout_marginRight="@dimen/dimen_10dp"
+                                    android:layout_marginEnd="@dimen/dimen_10dp"
+                                    android:layout_weight="1"
+                                    android:src="@drawable/gateway_tigo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent" />
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:id="@+id/mPesa"
+                                    android:src="@drawable/gateway_mpesa"
+                                    android:layout_marginRight="@dimen/dimen_10dp"
+                                    android:layout_marginEnd="@dimen/dimen_10dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent" />
+                                <ImageView
+                                    android:layout_marginRight="@dimen/dimen_10dp"
+                                    android:layout_marginEnd="@dimen/dimen_10dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent" />
+                                <ImageView
+                                    android:layout_marginRight="@dimen/dimen_10dp"
+                                    android:layout_marginEnd="@dimen/dimen_10dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent" />
+                                <ImageView
+                                    android:layout_marginRight="@dimen/dimen_10dp"
+                                    android:layout_marginEnd="@dimen/dimen_10dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:background="@color/colorBackground"
+                            android:layout_marginTop="@dimen/dimen_1dp"
+                            android:layout_marginBottom="@dimen/dimen_10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_1dp"/>
+
+                        <LinearLayout
+                            android:padding="@dimen/dimen_16dp"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="@string/customer_details"
+                                android:textColor="@color/colorTextSecondary"
+                                android:textSize="@dimen/dimen_text_16sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_marginTop="@dimen/dimen_16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:paddingTop="@dimen/dimen_10dp"
+                                    android:gravity="top"
+                                    android:layout_gravity="center_vertical"
+                                    android:focusable="false"
+                                    android:background="@android:color/white"
+                                    android:inputType="text"
+                                    android:textSize="@dimen/dimen_text_16sp"
+                                    android:id="@+id/first_name_last_name"
+                                    android:textColor="@color/colorTextPrimary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:hint="@string/full_name" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_marginTop="@dimen/dimen_16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:paddingTop="@dimen/dimen_10dp"
+                                    android:gravity="top"
+                                    android:layout_gravity="center_vertical"
+                                    android:focusable="false"
+                                    android:background="@android:color/white"
+                                    android:inputType="textEmailAddress"
+                                    android:textSize="@dimen/dimen_text_16sp"
+                                    android:id="@+id/email_address"
+                                    android:textColor="@color/colorTextPrimary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:hint="@string/full_email" />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:background="@color/colorBackground"
+                            android:layout_marginTop="@dimen/dimen_10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_1dp"/>
+
+                        <LinearLayout
+                            android:padding="@dimen/dimen_16dp"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="@string/mobile_details"
+                                android:textColor="@color/colorTextSecondary"
+                                android:textSize="@dimen/dimen_text_16sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <LinearLayout
+                                android:layout_marginBottom="@dimen/dimen_10dp"
+                                android:layout_marginTop="@dimen/dimen_16dp"
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:src="@drawable/unknown_gateway"
+                                    android:layout_marginRight="@dimen/dimen_10dp"
+                                    android:id="@+id/payment_gateway"
+                                    android:layout_marginTop="@dimen/dimen_8dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_width="@dimen/dimen_20dp"
+                                    android:layout_height="@dimen/dimen_20dp"
+                                    tools:ignore="RtlHardcoded" />
+
+                                <br.com.sapereaude.maskedEditText.MaskedEditText
+                                    android:background="@android:color/white"
+                                    android:id="@+id/phone_number"
+                                    android:paddingTop="@dimen/dimen_10dp"
+                                    android:gravity="top"
+                                    android:focusable="true"
+                                    android:textSize="@dimen/dimen_text_18sp"
+                                    android:textColor="@color/colorTextPrimary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="phone"
+                                    android:maxLines="1"
+                                    mask:allowed_chars="1234567890"
+                                    mask:mask="+255(###) ###-###"
+                                    android:hint="712000000"
+                                    app:keep_hint="true"
+                                    />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_marginTop="@dimen/dimen_20dp"
+                                android:text="@string/payment_desc"
+                                android:textColor="@color/colorTextSecondary"
+                                android:textSize="@dimen/dimen_text_16sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_marginBottom="@dimen/dimen_16dp"
+                                android:lineSpacingExtra="@dimen/dimen_8dp"
+                                android:layout_marginTop="@dimen/dimen_10dp"
+                                android:textColor="@color/colorTextPrimary"
+                                android:id="@+id/payment_description"
+                                android:textSize="@dimen/dimen_text_15sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <Button
+                    android:elevation="@dimen/dimen_8dp"
+                    android:enabled="false"
+                    android:textStyle="bold"
+                    android:padding="@dimen/dimen_16dp"
+                    android:text="@string/pay_now"
+                    android:id="@+id/start_transaction"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/colorAccent"
+                    android:layout_below="@+id/content_holder"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:layout_marginBottom="@dimen/dimen_20dp"
+                    android:layout_marginLeft="@dimen/dimen_10dp"
+                    android:layout_marginRight="@dimen/dimen_10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:targetApi="lollipop" />
+            </RelativeLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@drawable/dialog_background_inset"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:background="@android:color/transparent"
+        android:id="@+id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_110dp"/>
+    <android.support.v4.widget.NestedScrollView
+        android:scrollbars="none"
+        android:layout_below="@id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:background="@drawable/dialog_bag_shape"
+            android:padding="@dimen/dimen_16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:paddingLeft="@dimen/dimen_16dp"
+                android:paddingRight="@dimen/dimen_16dp"
+                android:gravity="center"
+                android:id="@+id/payment_status"
+                android:textSize="32sp"
+                android:textColor="@color/colorTextSecondary"
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_below="@+id/payment_status"
+                android:paddingLeft="@dimen/dimen_16dp"
+                android:paddingRight="@dimen/dimen_16dp"
+                android:id="@+id/payment_memo"
+                android:lineSpacingExtra="@dimen/dimen_2dp"
+                android:textSize="@dimen/dimen_text_16sp"
+                android:textColor="@color/colorTextPrimary"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_marginBottom="@dimen/dimen_8dp"
+                android:translationZ="@dimen/dimen_2dp"
+                android:stateListAnimator="@null"
+                android:elevation="@dimen/dimen_2dp"
+                android:textSize="@dimen/dimen_text_18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:text="@string/ok_message"
+                android:id="@+id/close_dialog"
+                android:layout_marginTop="50dp"
+                android:layout_below="@+id/payment_memo"
+                android:padding="@dimen/dimen_16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:targetApi="lollipop" />
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <FrameLayout
+        android:id="@+id/payment_status_holder"
+        android:background="@drawable/status_circular_shape"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-50dp"
+        android:layout_below="@id/topView"
+        android:elevation="@dimen/dimen_4dp"
+        android:layout_width="@dimen/dimen_90dp"
+        android:layout_height="@dimen/dimen_90dp"
+        tools:targetApi="lollipop">
+
+        <ImageView
+            android:id="@+id/payment_status_icon"
+            android:src="@drawable/ic_check_white_24dp"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/dimen_40dp"
+            android:layout_height="@dimen/dimen_40dp" />
+
+    </FrameLayout>
+
+</RelativeLayout>

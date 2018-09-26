@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorPrimaryLight">#BBDEFB</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorTextPrimary">#212121</color>
+    <color name="colorTextSecondary">#757575</color>
+    <color name="colorBackground">#d6d9dc</color>
+    <color name="colorSuccess">#318635</color>
+    <color name="colorSuccessDar">#2E7D32</color>
+    <color name="colorError">#d22d2d</color>
+    <color name="colorErrorDark">#bf2525</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="spots_dialog_color">@color/colorPrimaryDark</color>
+</resources>

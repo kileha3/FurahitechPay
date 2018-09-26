@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">FurahitechPay</string>
+    <string name="supported_payments">Supported payments</string>
+    <string name="customer_details">Personal details</string>
+    <string name="full_name">Full name</string>
+    <string name="full_email">Email Address</string>
+    <string name="mobile_details">Phone number</string>
+    <string name="payment_desc">Payment description</string>
+    <string name="pay_now">PAY NOW</string>
+    <string name="secure_payment">Secure Payment</string>
+    <string name="success_swahili">Muamala umefanikiwa</string>
+    <string name="failure_blocked_swa">Haujaruhusiwa</string>
+    <string name="failure_blocked_eng">Has not been</string>
+    <string name="success_english">Transaction processed successfully</string>
+    <string name="failure_swahili">Muamala Haujaruhusiwa</string>
+    <string name="failure_expired">Muamala wako umekwisha muda wake</string>
+    <string name="failure_swahili_not_available">Huduma ya malipo haipatikani</string>
+    <string name="failure_swahili_no_account">Akaunti yako ya tigo Pesa haipo</string>
+    <string name="failure_no_enough_funds">Huna salio la kutosha</string>
+    <string name="session_termination_message">Your session will be terminated shortly</string>
+    <string name="failure_networks"><![CDATA[<head><head></head><body></body></head>]]></string>
+    <string name="ok_message">OK</string>
+    <string name="redirection">Default redirection...</string>
+</resources>

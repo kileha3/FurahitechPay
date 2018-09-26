@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="@dimen/dimen_200dp"
+    android:layout_width="match_parent"
+    app:contentInsetStart="0dp"
+    app:contentInsetEnd="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetRight="0dp"
+    android:clipToPadding="false"
+    android:background="@color/colorPrimary"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    tools:ignore="PrivateResource">
+    <RelativeLayout
+        android:layout_marginBottom="@dimen/dimen_40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_centerInParent="true"
+            android:text="30000"
+            android:textStyle="bold"
+            android:id="@+id/total_amount"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/dimen_text_40sp"
+            android:gravity="center|center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="RtlHardcoded" />
+        <TextView
+            android:layout_below="@+id/total_amount"
+            android:text="Fees 890"
+            android:textStyle="normal"
+            android:id="@+id/extra_charges"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/dimen_text_15sp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>
