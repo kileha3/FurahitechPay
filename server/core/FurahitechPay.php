@@ -322,6 +322,8 @@ class FurahitechPay{
         $notificationData->amount = $transactionDetails->amount;
         $notificationData->url = $transactionDetails->dataReceiver;
         $notificationData->timeStamp = strtotime(gmdate("Y-m-d H:i:s"));
+        $notificationData->clientEmail = $transactionDetails->emailAddress;
+        $notificationData->clientName = $transactionDetails->firstName." ".$transactionDetails->lastName;
 
         $code = substr($notificationData->transactionRef,10,strlen($notificationData->transactionRef));
 
@@ -363,16 +365,15 @@ class FurahitechPay{
     private function handleNotification($emailAddress,$message,$notificationData){
         $this->environment = true;
         $this->apiType = 2;
-
-        if($notificationData->url != "null" && $notificationData->status){
+        if($notificationData->url != "null" && $notificationData->status && strlen($notificationData->url) > 10){
             $this->requestResponse = $this->executePostRequest(null,$notificationData,$notificationData->url);
         }
 
         if($this->requestResponse != null){
-           return $this->sendPushMessage($emailAddress,"paymentApi",true,
+           $this->sendPushMessage($emailAddress,"paymentApi",true,
                "new", $notificationData,"Payment Feedback",$message);
         }
-        return null;
+        return $notificationData;
     }
 
     /**
@@ -400,8 +401,9 @@ class FurahitechPay{
             $notificationData->timeStamp = strtotime(gmdate("Y-m-d H:i:s"));
             $notificationData->amount = $clientInfo->amount;
             $notificationData->url = $clientInfo->dataReceiver;
-            $this->handleNotification($clientInfo->emailAddress,$message,$notificationData);
-            $notification = $notificationData;
+            $notificationData->clientEmail = $clientInfo->emailAddress;
+            $notificationData->clientName = $clientInfo->firstName." ".$clientInfo->lastName;
+            $notification = $this->handleNotification($clientInfo->emailAddress,$message,$notificationData);
             $this->requestResponse->error = !($clientInfo != null && $transactionStatus == TRANSACTION_SUCCESS);
             $this->requestResponse->message = $message;
             $this->requestResponse->data = $notification;

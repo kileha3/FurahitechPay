@@ -4,7 +4,7 @@ This is a collection of different payment API's, this API supports Stripe, Tigo 
 </p>
 
 ## Releases <a name="releases"></a>
-
+[![](https://jitpack.io/v/kileha3/FurahitechPay.svg)](https://jitpack.io/#kileha3/FurahitechPay)
 
 
 
@@ -36,7 +36,8 @@ This API work with FurahitechPayments-Server repo, what you have to do is:-<br/>
 Add this to your dependencies (Check for the latest release):
 ```groovy
 
-implementation "com.github.kileha3:FurahitechPayments:<Version Number>"
+implementation 'com.github.kileha3:FurahitechPay:$versionNumber'
+
 ```
 
 Create a payment request
@@ -118,13 +119,31 @@ request.useLiveApi(true);
 ...
 ```
 If you want to send payment result
- automatically to your remote server make sure to include its URL on request.
+ automatically to your remote server make sure to include its URL on request. Your receiving end must be of type POST
 ```java
 ... 
  request.setDataReceiver("");
 ...
 ```
 
+POST data which will be sent to your remote URL
+```json
+{
+  "status":true ,
+  "productName":"Example Product Name",
+  "productId":"12",
+  "message":"Unfortunately, your payment was not successfully processed by FurahitechPay<\/b>",
+  "transactionRef":"xujJvV7jjHYYV9E79",
+  "timeStamp":1537975151,
+  "amount":"50000",
+  "clientEmail":"example@example.com",
+  "clientName":"John Doe"
+}
+
+/* status":true = SUCESS */
+
+
+```
 ## Contributing <a name="contribute"></a>
 * Do you have a new feature in mind?
 * Do you know how to improve existing docs or code?
