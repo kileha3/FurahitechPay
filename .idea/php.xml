@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/server/vendor/nikic/fast-route" />
+      <path value="$PROJECT_DIR$/server/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/server/vendor/pimple/pimple" />
+      <path value="$PROJECT_DIR$/server/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/server/vendor/stripe/stripe-php" />
+      <path value="$PROJECT_DIR$/server/vendor/akrabat/rka-ip-address-middleware" />
+      <path value="$PROJECT_DIR$/server/vendor/container-interop/container-interop" />
+      <path value="$PROJECT_DIR$/server/vendor/slim/slim" />
+      <path value="$PROJECT_DIR$/server/vendor/composer" />
+    </include_path>
+  </component>
+</project>
