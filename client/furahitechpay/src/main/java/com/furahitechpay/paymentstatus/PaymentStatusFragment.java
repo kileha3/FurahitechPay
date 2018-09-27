@@ -47,7 +47,7 @@ public class PaymentStatusFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_payment_status, container, false);
+        View view = inflater.inflate(R.layout.furahitech_fragment_payment_status, container, false);
         TextView paymentMemo = view.findViewById(R.id.payment_memo);
         TextView statusText = view.findViewById(R.id.payment_status);
         ImageView paymentStatusIcon = view.findViewById(R.id.payment_status_icon);

@@ -39,7 +39,7 @@ public class SecureWebViewActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_secure_payment);
+        setContentView(R.layout.furahitech_activity_secure_payment);
         securePageURL = getIntent().getStringExtra(REDIRECTION_URL_TAG);
         dataRequest = FurahitechPay.getInstance().getPaymentDataRequest();
         setUpViews();

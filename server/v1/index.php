@@ -18,6 +18,7 @@ $app->add(new RKA\Middleware\IpAddress($checkProxyHeaders, $trustedProxies));
 $app->post("/tigo/authenticate",function(Request $request,  Response $response, $args = []){
     $furahitechPay = new FurahitechPay();
     $transactionDetails = $furahitechPay->serializeObject($request->getParsedBody());
+    $transactionDetails->gateway = "TIGOPESA";
     $responseData = $furahitechPay->getSecurePaymentRedirectURL($transactionDetails);
     return $response->withJson($responseData,200);
 });
@@ -26,6 +27,7 @@ $app->post("/tigo/authenticate",function(Request $request,  Response $response, 
 $app->post("/vodacom/authenticate",function(Request $request,  Response $response, $args = []){
     $furahitechPay = new FurahitechPay();
     $transactionDetails = $furahitechPay->serializeObject($request->getParsedBody());
+    $transactionDetails->gateway = "MPESA";
     $responseData = $furahitechPay->payWithMpesa($transactionDetails);
     return $response->withJson($responseData,200);
 });

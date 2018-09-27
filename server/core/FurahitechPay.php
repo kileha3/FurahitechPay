@@ -401,6 +401,7 @@ class FurahitechPay{
             $notificationData->timeStamp = strtotime(gmdate("Y-m-d H:i:s"));
             $notificationData->amount = $clientInfo->amount;
             $notificationData->url = $clientInfo->dataReceiver;
+            $notificationData->gateway = $clientInfo->gateway;
             $notificationData->clientEmail = $clientInfo->emailAddress;
             $notificationData->clientName = $clientInfo->firstName." ".$clientInfo->lastName;
             $notification = $this->handleNotification($clientInfo->emailAddress,$message,$notificationData);

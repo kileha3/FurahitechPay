@@ -41,7 +41,7 @@ public class CardPaymentActivity extends AppCompatActivity implements Contract.V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_payment);
+        setContentView(R.layout.furahitech_activity_card_payment);
 
         presenter = new Presenter(this);
         request = FurahitechPay.getInstance().getPaymentDataRequest();

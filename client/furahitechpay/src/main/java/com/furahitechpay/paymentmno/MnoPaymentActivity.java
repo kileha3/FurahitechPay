@@ -49,7 +49,7 @@ public class MnoPaymentActivity extends AppCompatActivity implements Contract.Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mno_payment);
+        setContentView(R.layout.furahitech_activity_mno_payment);
         presenter = new Presenter(this);
         request = FurahitechPay.getInstance().getPaymentDataRequest();
         setUpViews();

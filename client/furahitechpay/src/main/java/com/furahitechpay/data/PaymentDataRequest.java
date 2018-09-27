@@ -15,7 +15,6 @@ public class PaymentDataRequest {
     private String description;
     private String productName = NULL;
     private String productId = NULL;
-    private String remoteDataSource;
     private String dataReceiver = NULL;
     private String oneSignalApiKey = NULL;
     private String oneSignalAppId = NULL;
@@ -136,13 +135,6 @@ public class PaymentDataRequest {
         this.productId = productId;
     }
 
-    public String getRemoteDataSource() {
-        return remoteDataSource;
-    }
-
-    public void setRemoteDataSource(String remoteDataSource) {
-        this.remoteDataSource = remoteDataSource;
-    }
 
     public Enum getPaymentStatus() {
         return paymentStatus;

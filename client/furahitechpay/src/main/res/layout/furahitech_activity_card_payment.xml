@@ -16,10 +16,10 @@
 
         <include
             android:id="@+id/tool_bar"
-            layout="@layout/layout_default_toolbar"/>
+            layout="@layout/furahitech_layout_default_toolbar"/>
         <include
             android:id="@+id/tool_bar_extended"
-            layout="@layout/layout_extended_toolbar"/>
+            layout="@layout/furahitech_layout_extended_toolbar"/>
 
     </android.support.design.widget.AppBarLayout>
 

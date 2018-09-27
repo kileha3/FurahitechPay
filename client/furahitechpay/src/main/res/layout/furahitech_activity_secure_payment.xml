@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         tools:targetApi="lollipop">
         <include
-            layout="@layout/layout_default_toolbar"/>
+            layout="@layout/furahitech_layout_default_toolbar"/>
         <ProgressBar
             android:progressDrawable="@drawable/progress_bar_drawable"
             style="?android:attr/progressBarStyleHorizontal"
