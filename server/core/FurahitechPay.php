@@ -388,7 +388,7 @@ class FurahitechPay{
         $this->oneSignalApiKey = $clientInfo->oneSignalApiKey;
         $this->oneSignalAppId = $clientInfo->oneSignalAppId;
         if($clientInfo != null){
-            $message = $transactionStatus == TRANSACTION_FAILURE ?
+            $message = $transactionStatus == TRANSACTION_SUCCESS ?
                 "Thank you, you have successfully paid $clientInfo->amount TZS. Your payment confirmation code is $transactionRef.
              <br/><br/>Processed by ":"Unfortunately, your payment was not successfully processed by ";
             $message = $message."<b>FurahitechPay</b>";
