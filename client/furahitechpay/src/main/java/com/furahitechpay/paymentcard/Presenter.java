@@ -1,14 +1,11 @@
 package com.furahitechpay.paymentcard;
 
-import android.content.Intent;
-
 import com.furahitechpay.FurahitechPay;
 import com.furahitechpay.data.ConnectionRequestListener;
 import com.furahitechpay.data.FurahitechResponse;
 import com.furahitechpay.data.PaymentResult;
 import com.furahitechpay.data.remote.RemoteCalls;
 import com.furahitechpay.interfaces.PaymentResultListener;
-import com.furahitechpay.paymentmno.SecureWebViewActivity;
 import com.furahitechpay.util.Furahitech;
 import com.furahitechpay.util.executors.ThreadExecutor;
 import com.furahitechpay.util.executors.ThreadManager;
@@ -18,11 +15,29 @@ import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
 import com.stripe.android.view.CardInputWidget;
 
-import static com.furahitechpay.paymentmno.SecureWebViewActivity.REDIRECTION_URL_TAG;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 class Presenter implements Contract.Presenter,ConnectionRequestListener, PaymentResultListener{
     private Contract.View view;
     private FurahitechPay furahitechPay;
+    private PaymentResult paymentResult = null;
+    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    private Runnable paymentProcessor = new Runnable() {
+        @Override
+        public void run() {
+            if(paymentResult == null){
+                paymentResult = new PaymentResult();
+                paymentResult.setMessage("Unfortunately, your payment process has timed out. " +
+                        "Rest assured that we will notify you when your payment status changes");
+                paymentResult.setPaymentState(Furahitech.PaymentStatus.TIMEOUT);
+                handleShuttingDownExecutorService();
+            }
+
+        }
+    };
+
     Presenter(Contract.View view){
         this.view = view;
     }
@@ -55,10 +70,10 @@ class Presenter implements Contract.Presenter,ConnectionRequestListener, Payment
     @Override
     public void onRequestCompleted(FurahitechResponse response) {
         if(view != null){
-            FurahitechPay.getInstance()
-                    .getPaymentDataRequest()
-                    .setPaymentStatus(Furahitech.PaymentStatus.PROCESSING);
-            view.showProgress(false);
+            synchronized (executor){
+                view.showProgress(false);
+                executor.schedule(paymentProcessor,1, TimeUnit.MINUTES);
+            }
 
         }
     }
@@ -75,9 +90,10 @@ class Presenter implements Contract.Presenter,ConnectionRequestListener, Payment
     @Override
     public void onPaymentCompleted(PaymentResult paymentResult) {
         if(view != null){
-            view.hideProgress();
-            FurahitechPay.getInstance().removePaymentResultListener(this);
-            view.showCompletionDialog(paymentResult);
+            this.paymentResult = paymentResult;
+            synchronized (executor){
+                handleShuttingDownExecutorService();
+            }
         }
     }
 
@@ -117,5 +133,12 @@ class Presenter implements Contract.Presenter,ConnectionRequestListener, Payment
         if(view != null){
             view = null;
         }
+    }
+
+    private void handleShuttingDownExecutorService(){
+        view.hideProgress();
+        FurahitechPay.getInstance().removePaymentResultListener(this);
+        executor.shutdownNow();
+        view.showCompletionDialog(paymentResult);
     }
 }

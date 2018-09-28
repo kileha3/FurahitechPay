@@ -272,6 +272,9 @@ public class MnoPaymentActivity extends AppCompatActivity implements Contract.Vi
             presenter.onDestroy();
             FurahitechPay.getInstance().destroy();
         }
+        if(alertDialog!=null && alertDialog.isShowing()){
+            alertDialog.cancel();
+        }
         super.onDestroy();
     }
 }

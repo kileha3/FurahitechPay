@@ -39,7 +39,7 @@ class Presenter implements Contract.Presenter , ConnectionRequestListener, Payme
                 paymentResult = new PaymentResult();
                 paymentResult.setMessage("Unfortunately, your payment process has timed out. " +
                         "Rest assured that we will notify you when your payment status changes");
-                paymentResult.setStatus(Furahitech.PaymentStatus.TIMEOUT);
+                paymentResult.setPaymentState(Furahitech.PaymentStatus.TIMEOUT);
                 handleShuttingDownExecutorService();
             }
 
@@ -117,7 +117,6 @@ class Presenter implements Contract.Presenter , ConnectionRequestListener, Payme
                         synchronized (executor){
                             view.showProgress(false);
                             executor.schedule(paymentProcessor,1,TimeUnit.MINUTES);
-                            executorProcess.schedule(paymentProcessor,5,TimeUnit.MINUTES);
                         }
                     }else{
                         handleShuttingDownExecutorService();
@@ -144,10 +143,10 @@ class Presenter implements Contract.Presenter , ConnectionRequestListener, Payme
                 secureIntent.putExtra(REDIRECTION_URL_TAG,response.getData());
                 view.getContext().startActivity(secureIntent);
             }else{
-                FurahitechPay.getInstance()
-                        .getPaymentDataRequest()
-                        .setPaymentStatus(Furahitech.PaymentStatus.PROCESSING);
-                view.showProgress(false);
+                synchronized (executorProcess){
+                    view.showProgress(false);
+                    executorProcess.schedule(paymentProcessor,3,TimeUnit.MINUTES);
+                }
             }
         }
     }

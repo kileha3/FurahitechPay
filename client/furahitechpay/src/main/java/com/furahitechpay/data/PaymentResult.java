@@ -20,7 +20,7 @@ public class PaymentResult implements Serializable{
     private String gateWay;
     @SerializedName("timeStamp")
     private long timeStamp;
-    private Enum status = Furahitech.PaymentStatus.NOT_STARTED;
+    private Enum paymentState = Furahitech.PaymentStatus.NOT_STARTED;
 
     public String getMessage() {
         return message;
@@ -82,11 +82,11 @@ public class PaymentResult implements Serializable{
         this.gateWay = gateWay;
     }
 
-    public Enum getStatus() {
-        return status;
+    public Enum getPaymentState() {
+        return paymentState;
     }
 
-    public void setStatus(Enum status) {
-        this.status = status;
+    public void setPaymentState(Enum paymentState) {
+        this.paymentState = paymentState;
     }
 }

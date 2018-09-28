@@ -65,11 +65,7 @@ public class FurahitechPay {
                 if(listeners != null){
                     PaymentResult paymentResult =
                             (PaymentResult) intent.getSerializableExtra(EXTRA_PAYMENT_RESULT_DATA);
-                    FurahitechPay.getInstance()
-                            .getPaymentDataRequest()
-                            .setPaymentStatus(paymentResult.isSuccess() ?
-                                    Furahitech.PaymentStatus.SUCCESS: Furahitech.PaymentStatus.FAILURE);
-                    paymentResult.setStatus(paymentResult.isSuccess() ?
+                    paymentResult.setPaymentState(paymentResult.isSuccess() ?
                             Furahitech.PaymentStatus.SUCCESS: Furahitech.PaymentStatus.FAILURE);
                     for(PaymentResultListener paymentResultListener : listeners){
                         paymentResultListener.onPaymentCompleted(paymentResult);

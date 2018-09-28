@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.furahitechpay.FurahitechPay;
 import com.furahitechpay.R;
 import com.furahitechpay.data.PaymentResult;
 import com.furahitechpay.interfaces.StatusDialogClickListener;
@@ -54,7 +53,7 @@ public class PaymentStatusFragment extends DialogFragment {
         Button closeDialog = view.findViewById(R.id.close_dialog);
         FrameLayout paymentStatusHolder = view.findViewById(R.id.payment_status_holder);
         PaymentResult result = ((PaymentResult)getArguments().getSerializable(PAYMENT_RESULT_TAG));
-        Enum status = result.getStatus();
+        Enum status = result.getPaymentState();
         int paymentStatusColors= ContextCompat.getColor(getActivity(),
                 status.equals(Furahitech.PaymentStatus.SUCCESS)
                 ? R.color.colorSuccess : status.equals(Furahitech.PaymentStatus.TIMEOUT)
