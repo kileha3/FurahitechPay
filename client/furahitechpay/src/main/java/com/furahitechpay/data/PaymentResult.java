@@ -1,5 +1,6 @@
 package com.furahitechpay.data;
 
+import com.furahitechpay.util.Furahitech;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class PaymentResult implements Serializable{
     private String gateWay;
     @SerializedName("timeStamp")
     private long timeStamp;
+    private Enum status = Furahitech.PaymentStatus.NOT_STARTED;
 
     public String getMessage() {
         return message;
@@ -78,5 +80,13 @@ public class PaymentResult implements Serializable{
 
     public void setGateWay(String gateWay) {
         this.gateWay = gateWay;
+    }
+
+    public Enum getStatus() {
+        return status;
+    }
+
+    public void setStatus(Enum status) {
+        this.status = status;
     }
 }

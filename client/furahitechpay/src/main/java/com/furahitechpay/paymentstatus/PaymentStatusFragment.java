@@ -53,8 +53,8 @@ public class PaymentStatusFragment extends DialogFragment {
         ImageView paymentStatusIcon = view.findViewById(R.id.payment_status_icon);
         Button closeDialog = view.findViewById(R.id.close_dialog);
         FrameLayout paymentStatusHolder = view.findViewById(R.id.payment_status_holder);
-
-        Enum status = FurahitechPay.getInstance().getPaymentDataRequest().getPaymentStatus();
+        PaymentResult result = ((PaymentResult)getArguments().getSerializable(PAYMENT_RESULT_TAG));
+        Enum status = result.getStatus();
         int paymentStatusColors= ContextCompat.getColor(getActivity(),
                 status.equals(Furahitech.PaymentStatus.SUCCESS)
                 ? R.color.colorSuccess : status.equals(Furahitech.PaymentStatus.TIMEOUT)
@@ -65,7 +65,7 @@ public class PaymentStatusFragment extends DialogFragment {
                 ? R.drawable.ic_timer_off_white_24dp:R.drawable.ic_close_white_24dp;
         String paymentStatusLabel= status.equals(Furahitech.PaymentStatus.SUCCESS) ?
                 "Success": status.equals(Furahitech.PaymentStatus.TIMEOUT) ? "Timeout":"Failure";
-        String message = ((PaymentResult)getArguments().getSerializable(PAYMENT_RESULT_TAG)).getMessage();
+        String message = result.getMessage();
         paymentMemo.setText(Html.fromHtml(message));
         statusText.setText(paymentStatusLabel);
         TextJustification.justify(statusText);

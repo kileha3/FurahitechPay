@@ -69,6 +69,8 @@ public class FurahitechPay {
                             .getPaymentDataRequest()
                             .setPaymentStatus(paymentResult.isSuccess() ?
                                     Furahitech.PaymentStatus.SUCCESS: Furahitech.PaymentStatus.FAILURE);
+                    paymentResult.setStatus(paymentResult.isSuccess() ?
+                            Furahitech.PaymentStatus.SUCCESS: Furahitech.PaymentStatus.FAILURE);
                     for(PaymentResultListener paymentResultListener : listeners){
                         paymentResultListener.onPaymentCompleted(paymentResult);
                     }

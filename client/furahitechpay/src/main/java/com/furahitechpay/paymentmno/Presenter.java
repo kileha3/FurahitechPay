@@ -29,7 +29,8 @@ class Presenter implements Contract.Presenter , ConnectionRequestListener, Payme
     private HashMap<Furahitech.GateWay,Integer> supportedGatewayViews = new HashMap<>();
     private Furahitech.GateWay gateWay = null;
     private PaymentResult paymentResult = null;
-    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();;
+    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService executorProcess = Executors.newSingleThreadScheduledExecutor();
 
     private Runnable paymentProcessor = new Runnable() {
         @Override
@@ -38,9 +39,7 @@ class Presenter implements Contract.Presenter , ConnectionRequestListener, Payme
                 paymentResult = new PaymentResult();
                 paymentResult.setMessage("Unfortunately, your payment process has timed out. " +
                         "Rest assured that we will notify you when your payment status changes");
-                FurahitechPay.getInstance()
-                        .getPaymentDataRequest()
-                        .setPaymentStatus(Furahitech.PaymentStatus.TIMEOUT);
+                paymentResult.setStatus(Furahitech.PaymentStatus.TIMEOUT);
                 handleShuttingDownExecutorService();
             }
 
@@ -118,6 +117,7 @@ class Presenter implements Contract.Presenter , ConnectionRequestListener, Payme
                         synchronized (executor){
                             view.showProgress(false);
                             executor.schedule(paymentProcessor,1,TimeUnit.MINUTES);
+                            executorProcess.schedule(paymentProcessor,5,TimeUnit.MINUTES);
                         }
                     }else{
                         handleShuttingDownExecutorService();
@@ -183,6 +183,7 @@ class Presenter implements Contract.Presenter , ConnectionRequestListener, Payme
         view.hideProgress();
         FurahitechPay.getInstance().removePaymentResultListener(Presenter.this);
         executor.shutdownNow();
+        executorProcess.shutdownNow();
         view.showCompletionDialog(paymentResult);
     }
 }
