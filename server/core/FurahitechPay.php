@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
 /**
  * Class which handles all operations like requesting authorization,
  * generating payment reference code and many other.
@@ -84,8 +84,6 @@ class FurahitechPay{
      */
     private function sendPushMessage($emailAddress,$notificationType, $backgroundMode, $notificationAction,
                              $notificationData, $notificationTitle, $notificationMessage){
-        $this->apiType = 2;
-        $this->environment = true;
         $content = array(
             "en" => $notificationMessage
         );
@@ -129,9 +127,21 @@ class FurahitechPay{
      * @return mixed Response of the POSt request
      */
     function executePostRequest($requestHeaders, $requestBody, $requestEndPoint){
-        $requestURL = ($this->environment ? ($this->apiType == 0 ? ENVIRONMENT_TIGO_LIVE :
-                    ($this->apiType == 1 ? ENVIRONMENT_WAZO_LIVE:"") )
-                :ENVIRONMENT_TIGO_SANDBOX).$requestEndPoint;
+        $requestURL = "";
+        if($this->apiType == 0){
+            $requestURL = $this->environment ? ENVIRONMENT_TIGO_LIVE:ENVIRONMENT_TIGO_SANDBOX;
+        }
+
+        if($this->apiType == 1){
+            $requestURL = $this->environment ? ENVIRONMENT_WAZO_LIVE:"";
+        }
+
+        if($this->apiType == 2){
+            $requestURL = "https://securesandbox.tigo.com/v1/";
+        }
+
+        $requestURL = $requestURL.$requestEndPoint;
+        var_dump($requestURL);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $requestURL);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -153,12 +163,14 @@ class FurahitechPay{
 
     /**
      * Get secure session ID from Tigo Pesa servers
-     *
+     * @param environment True when LIVE otherwise FALSE
      * @return string acquired session Id
      */
     private function getTigoPesaSessionId(){
         $headers = array();
-        $request_url = "oauth/generate/accesstoken?grant_type=client_credentials";
+        $request_url = $this->environment == "true" ?
+            "oauth/generate/accesstoken?grant_type=client_credentials":
+            "oauth/generate/accesstoken-test-2018?grant_type=client_credentials";
         $headers["Content-Type"]="application/x-www-form-urlencoded";
         $requestBody="client_id=".TIGO_MERCHANT_ACCOUNT_KEY."&client_secret=".TIGO_MERCHANT_ACCOUNT_SECRET;
         $response = $this->executePostRequest($headers,$requestBody,$request_url);
@@ -232,9 +244,11 @@ class FurahitechPay{
      * @return mixed Secure page redirection details
      */
     function getSecurePaymentRedirectURL($transactionDetails){
-        $this->environment = $transactionDetails->environment;
         $this->apiType = 0;
-        $requestUrl = "tigo/payment-auth/authorize";
+        $this->environment = $transactionDetails->environment == "true";
+        $requestUrl = $this->environment ?
+            "tigo/payment-auth/authorize":
+            "tigo/payment-auth-test-2018/authorize";
         $headers = array(
             'Content-Type: application/json',
             'accessToken:'.$this->getTigoPesaSessionId()
@@ -246,6 +260,10 @@ class FurahitechPay{
         $this->requestResponse->transactionRef = $response->transactionRefId;
         $filePath = $this->logDirPath.$this->requestResponse->transactionRef.".json";
         $contentWritten = $this->writeContentToAFile($transactionDetails,$filePath);
+        $logData = new \stdClass();
+        $logData->request = $transactionDetails;
+        $logData->response = $this->requestResponse;
+        $this->writeContentToAFile($logData,"paymentAuthLog.json");
         return $contentWritten ? $this->requestResponse:null;
     }
 
@@ -267,7 +285,7 @@ class FurahitechPay{
      * @return stdClass
      */
     function payWithMpesa($transactionDetails){
-        $this->environment = $transactionDetails->environment;
+        $this->environment = $transactionDetails->environment == "true";
         $this->apiType = 1;
         $requestUrl = "api/v1/c2b/push/mpesa";
         $requestBody = array(
@@ -326,14 +344,14 @@ class FurahitechPay{
         $notificationData->clientName = $transactionDetails->firstName." ".$transactionDetails->lastName;
 
         $code = substr($notificationData->transactionRef,10,strlen($notificationData->transactionRef));
-
-        $message = $data->outcome->network_status == "approved_by_network" ?
+        $success = $data->outcome->network_status == "approved_by_network";
+        $message =  $success ?
             "Thank you, you have successfully paid $transactionDetails->amount TZS. Your payment confirmation code is $code. <br/><br/>Processed by ":
             "Unfortunately, your payment was not successfully processed by ";
         $message = $message."<b>FurahitechPay</b>";
         $notificationData->message = $message;
 
-        $this->handleNotification($transactionDetails->emailAddress,$message,$notificationData);
+        $this->handleNotification($transactionDetails->emailAddress,$message,$notificationData,$success);
 
         $this->requestResponse->data = $data->outcome->seller_message;
         $this->requestResponse->transactionRef = $data->id;
@@ -360,20 +378,25 @@ class FurahitechPay{
      * @param $emailAddress string Client email address
      * @param $message string Message to be broadcasted
      * @param $notificationData mixed Set of transaction data to be sent to the client
+     * @param bool $success
      * @return mixed|null
      */
-    private function handleNotification($emailAddress,$message,$notificationData){
+    private function handleNotification($emailAddress,$message,$notificationData,$success = false){
         $this->environment = true;
-        $this->apiType = 2;
-        if($notificationData->url != "null" && $notificationData->status && strlen($notificationData->url) > 10){
-            $this->requestResponse = $this->executePostRequest(null,$notificationData,$notificationData->url);
+        $this->apiType = 3;
+        $notificationResponse = null;
+        if($notificationData->url != "null" && $success && strlen($notificationData->url) > 10){
+            $data = json_encode(json_decode(json_encode($notificationData), True));
+            $this->requestResponse = $this->executePostRequest(null,$data,$notificationData->url);
         }
 
         if($this->requestResponse != null){
-           $this->sendPushMessage($emailAddress,"paymentApi",true,
-               "new", $notificationData,"Payment Feedback",$message);
+            $notificationResponse = $this->sendPushMessage($emailAddress,"paymentApi",true,
+               "new", $notificationData,
+               "Payment Feedback",str_replace("</b>","",str_replace("<b>",
+                    "",str_replace("<br/>","",$message))));
         }
-        return $notificationData;
+        return $notificationResponse;
     }
 
     /**
@@ -383,14 +406,17 @@ class FurahitechPay{
      * @return stdClass
      */
     function mobilePaymentCallback($transactionRef, $transactionStatus){
+
         $filePath = $this->logDirPath.$transactionRef.".json";
         $clientInfo = json_decode($this->readContentFromTheFile($filePath));
+
         $this->oneSignalApiKey = $clientInfo->oneSignalApiKey;
         $this->oneSignalAppId = $clientInfo->oneSignalAppId;
         if($clientInfo != null){
+            $product = $clientInfo->productName != null ? " for ".$clientInfo->productName:"";
             $message = $transactionStatus == TRANSACTION_SUCCESS ?
-                "Thank you, you have successfully paid $clientInfo->amount TZS. Your payment confirmation code is $transactionRef.
-             <br/><br/>Processed by ":"Unfortunately, your payment was not successfully processed by ";
+                "Thank you, you have successfully paid $clientInfo->amount TZS".$product.". Your payment confirmation code is $transactionRef. <br/><br/>Processed by "
+                :"Unfortunately, your payment was not successfully processed by ";
             $message = $message."<b>FurahitechPay</b>";
             $notificationData = new \stdClass();
             $notificationData->status = $transactionStatus == TRANSACTION_SUCCESS;
@@ -404,13 +430,22 @@ class FurahitechPay{
             $notificationData->gateway = $clientInfo->gateway;
             $notificationData->clientEmail = $clientInfo->emailAddress;
             $notificationData->clientName = $clientInfo->firstName." ".$clientInfo->lastName;
-            $notification = $this->handleNotification($clientInfo->emailAddress,$message,$notificationData);
-            $this->requestResponse->error = !($clientInfo != null && $transactionStatus == TRANSACTION_SUCCESS);
-            $this->requestResponse->message = $message;
-            $this->requestResponse->data = $notification;
+            $notification = $this->handleNotification($clientInfo->emailAddress,$message,$notificationData,$transactionStatus == TRANSACTION_SUCCESS);
+            $this->requestResponse = null;
+            $this->requestResponse->notification = json_decode($notification);
+            $this->requestResponse->data = $notificationData;
+            return $this->requestResponse;
+
+        }else{
+            $this->requestResponse = null;
+            $data = new \stdClass();
+            $data->error = true;
+            $data->message = "Something happened on Middle-ware level, check logs";
+            $data->trace = "Level_1_Trace (Admin)";
+            $data->extra = "No any reference to ".$transactionRef;
+            $this->requestResponse = $data;
             return $this->requestResponse;
         }
 
-        return null;
     }
 }

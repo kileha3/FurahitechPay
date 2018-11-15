@@ -34,4 +34,4 @@ define('TRANSACTION_LANGUAGE_WAZO','SWA');
 define('TRANSACTION_SUCCESS','200');
 define('TRANSACTION_FAILURE','404');
 define('TRANSACTION_URL_CALLBACK','');
-define('TRANSACTION_URL_REDIRECTION','');
+define('TRANSACTION_URL_REDIRECTION','https://secure-pay.furahitech.co.tz/v1/default');
